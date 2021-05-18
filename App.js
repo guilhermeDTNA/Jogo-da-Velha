@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Button } from 'react-native';
 
 import X from './src/X';
 import O from './src/O';
@@ -10,13 +10,63 @@ export default class TicTac extends Component {
     super(props);
 
     this.state = {
+      turn: 'x',
+      notice: '',
 
+      a1: '',
+      a2: '',
+      a3: '',
+
+      b1: '',
+      b2: '',
+      b3: '',
+
+      c1: '',
+      c2: '',
+      c3: ''
     };
+
+    this.clicked = this.clicked.bind(this);
+    this.reset = this.reset.bind(this);
+  }
+
+  reset(){
+    this.setState({
+      turn: '',
+      notice: '',
+
+      a1: '',
+      a2: '',
+      a3: '',
+
+      b1: '',
+      b2: '',
+      b3: '',
+
+      c1: '',
+      c2: '',
+      c3: ''
+    });
+  }
+
+  clicked(position){
+    let state = this.state;
+
+    //eval transforma a concatenação em código JavaScript
+    if(eval('state.'+position) == ''){
+       eval('state.'+position+' = state.turn');
+
+       if(state.turn == 'x'){
+         state.turn = 'o';
+       } else{
+         state.turn = 'x'
+       }
+    }
+
+    this.setState(state);
   }
 
   render(){
-
-    //<View style={{width: 60, height: 60, backgroundColor: '#FF0000', borderRadius: 30}}></View>
 
     return (
       <View style={styles.container}>
@@ -24,61 +74,92 @@ export default class TicTac extends Component {
 
         <View style={styles.area}>
           <View style={[styles.vertical, {borderLeftWidth: 0}]}>
-            <View style={[styles.horizontal, {borderTopWidth: 0}]}>
-              
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('a1')}} style={[styles.horizontal, {borderTopWidth: 0}]}>
+              <View>
+                {this.state.a1 == 'x' && <X />}
+                {this.state.a1 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
 
-            <View style={styles.horizontal}>
-              <O />
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('a2')}} style={styles.horizontal}>
+              <View>
+                {this.state.a2 == 'x' && <X />}
+                {this.state.a2 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
 
-            <View style={styles.horizontal}>
-              
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('a3')}} style={styles.horizontal}>
+              <View>
+                {this.state.a3 == 'x' && <X />}
+                {this.state.a3 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
           </View>
 
           <View style={styles.vertical}>
-            <View style={[styles.horizontal, {borderTopWidth: 0}]}>
-               <X />
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('b1')}} style={[styles.horizontal, {borderTopWidth: 0}]}>
+              <View>
+                {this.state.b1 == 'x' && <X />}
+                {this.state.b1 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
 
-            <View style={styles.horizontal}>
-              
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('b2')}} style={styles.horizontal}>
+              <View>
+                {this.state.b2 == 'x' && <X />}
+                {this.state.b2 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
 
-            <View style={styles.horizontal}>
-              
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('b3')}} style={styles.horizontal}>
+              <View>
+                {this.state.b3 == 'x' && <X />}
+                {this.state.b3 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
           </View>
 
           <View style={styles.vertical}>
-            <View style={[styles.horizontal, {borderTopWidth: 0}]}>
-              
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('c1')}} style={[styles.horizontal, {borderTopWidth: 0}]}>
+              <View>
+                {this.state.c1 == 'x' && <X />}
+                {this.state.c1 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
 
-            <View style={styles.horizontal}>
-              
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('c2')}} style={styles.horizontal}>
+              <View>
+                {this.state.c2 == 'x' && <X />}
+                {this.state.c2 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
 
-            <View style={styles.horizontal}>
-              
-            </View>
+            <TouchableHighlight underlayColor='#EEEEEE' onPress={() => {this.clicked('c3')}} style={styles.horizontal}>
+              <View>
+                {this.state.c3 == 'x' && <X />}
+                {this.state.c3 == 'o' && <O />}
+              </View>
+            </TouchableHighlight>
           </View>
         </View>
 
         <View style={styles.infoArea}>
           <View style={styles.infoTurn}>
-            <Text>Vez de:</Text>
-            
-
+            <Text>Vez de: </Text>
+              {this.state.turn == 'x' && <X />}
+              {this.state.turn == 'o' && <O />}
               
             </View>
           
 
           <View style={styles.infoNotice}>
-            <Text>X ganhou!</Text>
+            <Text>{this.state.notice}</Text>
           </View>
 
+          </View>
+
+          <View>
+            <Button title="Resetar" onPress={this.reset} />
           </View>
 
 

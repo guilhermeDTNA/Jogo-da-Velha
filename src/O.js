@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
 	},
 	circle:{
 		width: 60,
-		backgroundColor: '#FF0000',
+		backgroundColor: 'green',
 		borderRadius: 30
 	}
 });
