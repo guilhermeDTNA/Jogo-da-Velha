@@ -28,12 +28,14 @@ export default class TicTac extends Component {
 
     this.clicked = this.clicked.bind(this);
     this.reset = this.reset.bind(this);
+    this.verify = this.verify.bind(this);
   }
 
   reset(){
     this.setState({
-      turn: '',
+      turn: 'x',
       notice: '',
+      status: 1,
 
       a1: '',
       a2: '',
@@ -53,7 +55,7 @@ export default class TicTac extends Component {
     let state = this.state;
 
     //eval transforma a concatenação em código JavaScript
-    if(eval('state.'+position) == ''){
+    if(eval('state.'+position) == '' && state.status == 1){
        eval('state.'+position+' = state.turn');
 
        if(state.turn == 'x'){
@@ -62,6 +64,51 @@ export default class TicTac extends Component {
          state.turn = 'x'
        }
     }
+
+    this.setState(state);
+
+    this.verify('x');
+    this.verify('o');
+  }
+
+  verify(value){
+    let state = this.state;
+
+    if(
+
+        (state.a1 == value && state.b1 == value && state.c1 == value) ||
+        (state.a2 == value && state.b2 == value && state.c2 == value) || 
+        (state.a3 == value && state.b3 == value && state.c3 == value) ||
+        (state.a1 == value && state.a2 == value && state.a3 == value) ||
+        (state.b1 == value && state.b2 == value && state.b3 == value) ||
+        (state.c1 == value && state.c2 == value && state.c3 == value) ||
+        (state.a1 == value && state.b2 == value && state.c3 == value) ||
+        (state.a3 == value && state.b2 == value && state.c1 == value)
+
+     ){
+      state.notice = value + ' ganhou!!';
+      state.status = 0;
+    } else if(state.status == 1){
+
+      //Verificando todos os campos
+
+      if(
+
+        state.a1 != '' && state.b1 != '' && state.c1 != '' &&
+        state.a2 != '' && state.b2 != '' && state.c2 != '' && 
+        state.a3 != '' && state.b3 != '' && state.c3 != '' 
+
+       ){
+        state.notice = 'EMPATOU';
+        state.status=0;
+      }
+
+    }
+
+    
+    
+
+
 
     this.setState(state);
   }
